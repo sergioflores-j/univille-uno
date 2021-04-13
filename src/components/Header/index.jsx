@@ -1,10 +1,11 @@
 import React from 'react';
 
+import logo from 'assets/UNO_Logo.svg';
 import * as S from './styles';
 
 const Header = () => (
   <S.Wrapper>
-    <h1>Header</h1>
+    <S.Logo src={logo} />
   </S.Wrapper>
 );
 

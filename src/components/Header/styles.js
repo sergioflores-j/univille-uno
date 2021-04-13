@@ -10,3 +10,12 @@ export const Wrapper = styled.div`
       ${theme.spacings.small} ${theme.spacings.xxsmall};
   `}
 `;
+
+export const Logo = styled.img`
+  ${({ theme }) => css`
+    padding: 0 ${theme.spacings.xxsmall};
+    cursor: pointer;
+    max-width: 150px;
+    max-height: 50px;
+  `}
+`;
