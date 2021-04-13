@@ -32,5 +32,12 @@
         "arrowParens": "avoid"
       }
     ]
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "paths": ["src"]
+      }
+    }
   }
 }
