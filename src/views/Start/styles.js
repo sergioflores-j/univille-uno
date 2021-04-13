@@ -1,10 +1,12 @@
 import styled, { css } from 'styled-components';
 
 export const Wrapper = styled.div`
-  ${({ theme }) => css`
+  ${() => css`
     display: flex;
-    flex-direction: column;
     width: 100%;
-    padding: ${theme.spacings.xxsmall};
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    min-height: 50vh;
   `}
 `;
