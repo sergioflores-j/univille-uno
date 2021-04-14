@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { createContext, useContext, useState } from 'react';
 
-const PlayerContext = React.createContext();
-const ChangePlayerContext = React.createContext();
+const PlayerContext = createContext();
+const ChangePlayerContext = createContext();
 
 export function PlayerProvider({ children }) {
-  const [state, setState] = React.useState({ name: '' });
+  const [state, setState] = useState({ name: '' });
 
   return (
     <PlayerContext.Provider value={state}>
@@ -16,7 +16,7 @@ export function PlayerProvider({ children }) {
 }
 
 export function usePlayer() {
-  const context = React.useContext(PlayerContext);
+  const context = useContext(PlayerContext);
   if (context === undefined) {
     throw new Error('usePlayer must be used inside its provider.');
   }
@@ -24,7 +24,7 @@ export function usePlayer() {
 }
 
 export function useChangePlayer() {
-  const context = React.useContext(ChangePlayerContext);
+  const context = useContext(ChangePlayerContext);
   if (context === undefined) {
     throw new Error('useChangePlayer must be used inside its provider.');
   }
