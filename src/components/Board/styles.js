@@ -14,7 +14,7 @@ export const Content = styled.div`
     'empty player2 uno';
   grid-template-columns: 20% 60% 20%;
   grid-template-rows: 25% 45% 30%;
-  height: 78vh;
+  height: calc(100vh - 240px);
 `;
 
 export const Empty = styled.div`
