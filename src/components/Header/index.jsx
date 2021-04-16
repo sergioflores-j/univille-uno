@@ -1,7 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 
-import logo from 'assets/UNO_Logo.svg';
+import logo from 'assets/logo.svg';
 import * as S from './styles';
 
 const Header = () => {

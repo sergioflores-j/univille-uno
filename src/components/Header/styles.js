@@ -6,8 +6,8 @@ export const Wrapper = styled.div`
     width: 100%;
     position: sticky;
     top: 0;
-    padding: ${theme.spacings.xxsmall} ${theme.spacings.xxsmall}
-      ${theme.spacings.small} ${theme.spacings.xxsmall};
+    padding: 0 ${theme.spacings.xxsmall};
+    border: 1px solid black;
   `}
 `;
 
@@ -16,6 +16,6 @@ export const Logo = styled.img`
     padding: 0 ${theme.spacings.xxsmall};
     cursor: pointer;
     max-width: 150px;
-    max-height: 50px;
+    max-height: 150px;
   `}
 `;
