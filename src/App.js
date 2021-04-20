@@ -1,3 +1,4 @@
+import { GameProvider } from 'context/game';
 import { PlayerProvider } from 'context/player';
 import { BrowserRouter, Redirect, Switch, Route } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
@@ -25,7 +26,9 @@ function App() {
               </Route>
               <Route path="/game">
                 <PageBase>
-                  <Game />
+                  <GameProvider>
+                    <Game />
+                  </GameProvider>
                 </PageBase>
               </Route>
               <Route path="*">

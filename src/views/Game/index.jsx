@@ -2,34 +2,28 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 import Board from 'components/Board';
 import { usePlayer } from 'context/player';
-import { generateCardsPile } from 'functions/pile';
 import { shuffle } from 'utils/array';
-
-const generatedPile = generateCardsPile();
-const [firstCard, initialBotCards, initialPlayerCards, rest] = [
-  generatedPile[0],
-  generatedPile.slice(1, 8),
-  generatedPile.slice(8, 14),
-  generatedPile.slice(15),
-];
+import { useGame } from 'context/game';
 
 const Game = () => {
   const player = usePlayer();
-  const mounted = useRef();
-  const [pile, setPile] = useState(rest);
-  const [discardedPile, setDiscardedPile] = useState([firstCard]);
+  const game = useGame();
+  const mounted = useRef(false);
+  const gameStarted = useRef(false);
+  const [pile, setPile] = useState([]);
+  const [discardedPile, setDiscardedPile] = useState([]);
   const [players, setPlayers] = useState([
     {
       id: 1,
       name: 'Crazy frog (bot)',
       isHuman: false,
-      cards: initialBotCards,
+      cards: [],
     },
     {
       id: 2,
       name: player.name,
       isHuman: true,
-      cards: initialPlayerCards,
+      cards: [],
     },
   ]);
 
@@ -72,6 +66,17 @@ const Game = () => {
     [drawCardsFromPile, players]
   );
 
+  const start = useCallback(() => {
+    if (!game.remainingCards.length) return;
+
+    setDiscardedPile([game.firstCard]);
+    setPlayerCards(0, game.initialBotCards);
+    setPlayerCards(1, game.initialPlayerCards);
+    setPile(game.remainingCards);
+
+    gameStarted.current = true;
+  }, [game]);
+
   useEffect(() => {
     if (!mounted.current) return;
 
@@ -88,6 +93,12 @@ const Game = () => {
       return [...copy];
     });
   }, [player]);
+
+  useEffect(() => {
+    if (gameStarted.current) return;
+
+    start();
+  }, [start]);
 
   useEffect(() => {
     if (mounted.current) return;
