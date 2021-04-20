@@ -1,8 +1,16 @@
 import React from 'react';
+import UnoButton from 'components/UnoButton';
 
 import * as S from './styles';
 
-const Board = ({ pile, discardedPile, players }) => {
+const Board = ({
+  pile,
+  discardedPile,
+  players,
+  unoedPlayers,
+  onCallUno,
+  onDrawCards,
+}) => {
   const [bot, player] = players;
 
   return (
@@ -20,7 +28,7 @@ const Board = ({ pile, discardedPile, players }) => {
             ))}
           </ul>
         </S.Player1>
-        <S.DiscardPile>
+        <S.DiscardPile onClick={onDrawCards}>
           DiscardPile
           <ul>
             {discardedPile.map(({ card }, index) => (
@@ -38,7 +46,9 @@ const Board = ({ pile, discardedPile, players }) => {
             ))}
           </ul>
         </S.Pile>
-        <S.Uno>Uno</S.Uno>
+        <S.Uno>
+          {!!unoedPlayers.length && <UnoButton onClick={onCallUno} />}
+        </S.Uno>
         <S.Player2>
           <ul>
             {player?.cards.map(({ card }, index) => (
