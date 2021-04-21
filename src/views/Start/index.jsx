@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { useChangePlayer, usePlayer } from 'context/player';
@@ -9,6 +9,11 @@ const Start = () => {
   const player = usePlayer();
   const changePlayer = useChangePlayer();
   const history = useHistory();
+  const inputRef = useRef();
+
+  useEffect(() => {
+    inputRef.current.focus();
+  }, []);
 
   const handleStart = useCallback(() => {
     console.log('starting...', player);
@@ -25,6 +30,7 @@ const Start = () => {
         Player name:
         <input
           id="nameInput"
+          ref={inputRef}
           value={player.name}
           onKeyDown={e => {
             if (e.key === 'Enter') {
