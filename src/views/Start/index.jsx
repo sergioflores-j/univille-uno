@@ -26,6 +26,11 @@ const Start = () => {
         <input
           id="nameInput"
           value={player.name}
+          onKeyDown={e => {
+            if (e.key === 'Enter') {
+              handleStart();
+            }
+          }}
           onChange={e => changePlayer(p => ({ ...p, name: e.target.value }))}
         />
       </label>
