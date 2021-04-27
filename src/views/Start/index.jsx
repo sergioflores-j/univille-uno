@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useCallback, useEffect, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
 
@@ -25,24 +26,25 @@ const Start = () => {
 
   return (
     <S.Wrapper>
-      <h1>Start</h1>
-      <label htmlFor="nameInput">
-        Player name:
-        <input
-          id="nameInput"
-          ref={inputRef}
-          value={player.name}
-          onKeyDown={e => {
-            if (e.key === 'Enter') {
-              handleStart();
-            }
-          }}
-          onChange={e => changePlayer(p => ({ ...p, name: e.target.value }))}
-        />
-      </label>
-      <button type="button" onClick={handleStart} disabled={!player.name}>
-        Start
-      </button>
+      <S.Content>
+        <S.Input>
+          <label htmlFor="nameInput">Player name</label>
+          <input
+            id="nameInput"
+            ref={inputRef}
+            value={player.name}
+            onKeyDown={e => {
+              if (e.key === 'Enter') {
+                handleStart();
+              }
+            }}
+            onChange={e => changePlayer(p => ({ ...p, name: e.target.value }))}
+          />
+        </S.Input>
+        <button type="button" onClick={handleStart} disabled={!player.name}>
+          Start
+        </button>
+      </S.Content>
     </S.Wrapper>
   );
 };
