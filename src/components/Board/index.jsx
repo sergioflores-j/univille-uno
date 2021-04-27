@@ -24,7 +24,10 @@ const Board = ({
         <S.Empty />
 
         <S.Player1>
-          <S.QuantityIndicator>{bot?.cards.length}</S.QuantityIndicator>
+          <S.PlayerHud>
+            <S.QuantityIndicator>{bot?.cards.length}</S.QuantityIndicator>
+            <S.PlayerName>{bot?.name}</S.PlayerName>
+          </S.PlayerHud>
           <S.CardsArea>
             {bot?.cards.map(({ id }) => (
               <Card card="back" key={`botcard-${id}`} />
@@ -51,7 +54,10 @@ const Board = ({
         </S.Uno>
 
         <S.Player2>
-          <S.QuantityIndicator>{player?.cards.length}</S.QuantityIndicator>
+          <S.PlayerHud>
+            <S.QuantityIndicator>{player?.cards.length}</S.QuantityIndicator>
+            <S.PlayerName>{player?.name}</S.PlayerName>
+          </S.PlayerHud>
           <S.CardsArea>
             {player?.cards.map(({ id, ...card }) => (
               <Card

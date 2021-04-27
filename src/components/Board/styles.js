@@ -14,7 +14,7 @@ export const Content = styled.div`
     'empty discardpile pile'
     'empty player2 uno';
   grid-template-columns: 10% 70% 20%;
-  grid-template-rows: 25% 45% 30%;
+  grid-template-rows: 27% 43% 30%;
   gap: 10px;
   padding: 20px;
   height: calc(100vh - 215px);
@@ -25,7 +25,6 @@ export const Content = styled.div`
       'discardpile pile'
       'player2 uno';
     grid-template-columns: 80% 20%;
-    grid-template-rows: 25% 45% 30%;
   `}
 `;
 
@@ -47,35 +46,50 @@ const modifiers = {
     justify-content: center;
     align-items: center;
   `,
+  playerArea: () => css`
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+  `,
 };
 
-export const QuantityIndicator = styled.div`
+export const PlayerHud = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: flex-start;
   min-width: 30px;
   margin: 10px;
   max-width: 100%;
+`;
+
+export const QuantityIndicator = styled.p`
   font-size: 38px;
 `;
 
+export const PlayerName = styled.p`
+  font-size: 18px;
+`;
+
 export const CardsArea = styled.div`
-  display: flex;
-  flex-direction: row;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(80px, 100px));
+  gap: 5px;
   max-width: 100%;
-  overflow-x: auto;
+  overflow: auto;
+  padding: 0 10px;
 `;
 
 export const Player1 = styled.div`
   grid-area: player1;
   background-color: white;
-  ${modifiers.flexRow()}
+  ${modifiers.playerArea()}
+  flex-direction: column-reverse;
 `;
 
 export const Player2 = styled.div`
   grid-area: player2;
   background-color: white;
-  ${modifiers.flexRow()}
+  ${modifiers.playerArea()}
 `;
 
 export const DiscardPile = styled.div`
