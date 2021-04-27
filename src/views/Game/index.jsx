@@ -43,11 +43,12 @@ const Game = () => {
   ]);
 
   const pileSelfHeal = useCallback(() => {
-    if (pile.length === 0) {
-      setPile(shuffle(discardedPile));
-      setDiscardedPile([]);
-    }
-  }, [pile, discardedPile]);
+    setPile(old => [
+      ...old,
+      ...shuffle(discardedPile.slice(0, discardedPile.length - 1)),
+    ]);
+    setDiscardedPile([discardedPile[discardedPile.length - 1]]);
+  }, [discardedPile]);
 
   const setPlayerCards = (playerIndex, cards) =>
     setPlayers(old => {
@@ -91,7 +92,7 @@ const Game = () => {
 
       const drawedCards = pile.slice(0, quantity);
 
-      setPile(old => [...old.slice(quantity - 1)]);
+      setPile(old => [...old.slice(quantity)]);
 
       return drawedCards;
     },
@@ -147,8 +148,8 @@ const Game = () => {
   useEffect(() => {
     if (!mounted.current) return;
 
-    pileSelfHeal();
-  }, [pileSelfHeal]);
+    if (pile.length <= 5) pileSelfHeal();
+  }, [pile, pileSelfHeal]);
 
   useEffect(() => {
     if (mounted.current) return;
