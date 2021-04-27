@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components';
+import { cardColorMap } from 'constants/index';
 
 export const Wrapper = styled.div`
   ${() => css`
@@ -43,8 +44,8 @@ export const Content = styled.div`
     ${!!color &&
     color !== 'default' &&
     css`
-      svg.background {
-        fill: ${color};
+      svg path.background {
+        fill: ${cardColorMap[color]} !important;
       }
     `}
   `}
