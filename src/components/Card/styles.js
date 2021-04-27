@@ -9,14 +9,14 @@ export const Wrapper = styled.div`
 `;
 
 export const Content = styled.div`
-  ${({ color, $loading }) => css`
+  ${({ color, $loading, $clickable }) => css`
     width: 100px;
     height: 150px;
 
     svg {
       width: 100%;
       height: 100%;
-      cursor: pointer;
+      cursor: ${$clickable ? 'pointer' : 'normal'};
     }
 
     ${$loading &&
