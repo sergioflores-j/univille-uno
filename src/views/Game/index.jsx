@@ -104,7 +104,7 @@ const Game = () => {
 
       const { cards } = players[playerIndex];
 
-      const newCards = [...cards, drawCardsFromPile(quantity)];
+      const newCards = [...cards, ...drawCardsFromPile(quantity)];
 
       setPlayerCards(playerIndex, newCards);
       onDrawCards(playerIndex, cards, newCards);
@@ -175,14 +175,12 @@ const Game = () => {
 
   return (
     <>
-      <h1>Game</h1>
-
       <Board
         pile={pile}
         discardedPile={discardedPile}
         players={players}
-        onDrawCards={drawCards}
         unoedPlayers={unoedPlayers}
+        onDrawCards={() => drawCards(1, 1)}
         onCallUno={() => callUno(2)}
       />
     </>

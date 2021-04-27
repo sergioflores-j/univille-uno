@@ -20,7 +20,7 @@ export function GameProvider({ children }) {
     setState({
       firstCard: generatedPile[0],
       initialBotCards: generatedPile.slice(1, 8),
-      initialPlayerCards: generatedPile.slice(8, 14),
+      initialPlayerCards: generatedPile.slice(8, 15),
       remainingCards: generatedPile.slice(15),
     });
   }, [player]);
