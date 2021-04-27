@@ -157,12 +157,14 @@ const Game = () => {
     });
   }, []);
 
+  // ? Pile selfheal (when going less than 5 remaining cards, reshuffle the discarded pile into it)
   useEffect(() => {
     if (!mounted.current) return;
 
     if (pile.length <= 5) pileSelfHeal();
   }, [pile, pileSelfHeal]);
 
+  // ? Set player name if player context changes
   useEffect(() => {
     if (mounted.current) return;
 
@@ -174,6 +176,7 @@ const Game = () => {
     });
   }, [player]);
 
+  // ? Start game
   useEffect(() => {
     if (gameStarted.current) return;
 

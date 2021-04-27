@@ -1,5 +1,6 @@
 import { PlayerProvider } from 'context/player';
 import { ThemeProvider } from 'styled-components';
+import { BrowserRouter } from 'react-router-dom';
 
 import Routes from 'Routes';
 import GlobalStyles from './styles/global';
@@ -10,7 +11,9 @@ function App() {
     <ThemeProvider theme={theme}>
       <GlobalStyles />
       <PlayerProvider>
-        <Routes />
+        <BrowserRouter>
+          <Routes />
+        </BrowserRouter>
       </PlayerProvider>
     </ThemeProvider>
   );

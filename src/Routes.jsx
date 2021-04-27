@@ -1,13 +1,7 @@
 import React, { useEffect } from 'react';
 import { GameProvider } from 'context/game';
 import { usePlayer } from 'context/player';
-import {
-  BrowserRouter,
-  Redirect,
-  Switch,
-  Route,
-  useHistory,
-} from 'react-router-dom';
+import { Redirect, Switch, Route, useHistory } from 'react-router-dom';
 
 import Frame from './components/Frame';
 import PageBase from './components/PageBase';
@@ -19,34 +13,32 @@ function Routes() {
   const history = useHistory();
 
   useEffect(() => {
-    if (!player) {
+    if (!player.name) {
       history.push('/start');
     }
-  }, [history, player]);
+  }, [history, player.name]);
 
   return (
-    <BrowserRouter>
-      <Frame>
-        <Switch>
-          <Redirect exact path="/" to="/start" />
-          <Route path="/start">
-            <PageBase>
-              <Start />
-            </PageBase>
-          </Route>
-          <Route path="/game">
-            <PageBase>
-              <GameProvider>
-                <Game />
-              </GameProvider>
-            </PageBase>
-          </Route>
-          <Route path="*">
-            <Redirect to="/" />
-          </Route>
-        </Switch>
-      </Frame>
-    </BrowserRouter>
+    <Frame>
+      <Switch>
+        <Redirect exact path="/" to="/start" />
+        <Route path="/start">
+          <PageBase>
+            <Start />
+          </PageBase>
+        </Route>
+        <Route path="/game">
+          <PageBase>
+            <GameProvider>
+              <Game />
+            </GameProvider>
+          </PageBase>
+        </Route>
+        <Route path="*">
+          <Redirect to="/" />
+        </Route>
+      </Switch>
+    </Frame>
   );
 }
 

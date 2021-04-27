@@ -14,14 +14,19 @@ const Start = () => {
 
   useEffect(() => {
     inputRef.current.focus();
+
+    if (localStorage.getItem('player-name'))
+      changePlayer(p => ({ ...p, name: localStorage.getItem('player-name') }));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleStart = useCallback(() => {
     console.log('starting...', player);
 
-    if (player.name) {
-      history.push('/game');
-    }
+    if (!player.name) return;
+
+    history.push('/game');
+    localStorage.setItem('player-name', player.name);
   }, [history, player]);
 
   return (
