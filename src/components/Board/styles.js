@@ -1,4 +1,6 @@
 import styled, { css } from 'styled-components';
+import media from 'styled-media-query';
+
 import { cardColorMap } from 'constants/index';
 
 export const Wrapper = styled.div`
@@ -13,10 +15,20 @@ export const Content = styled.div`
     'empty player1 empty2'
     'empty discardpile pile'
     'empty player2 uno';
-  grid-template-columns: 20% 60% 20%;
+  grid-template-columns: 10% 70% 20%;
   grid-template-rows: 25% 45% 30%;
-  padding: 10px;
-  height: calc(100vh - 240px);
+  gap: 10px;
+  padding: 20px;
+  height: calc(100vh - 215px);
+
+  ${media.lessThan('large')`
+    grid-template-areas:
+      'player1 empty2'
+      'discardpile pile'
+      'player2 uno';
+    grid-template-columns: 80% 20%;
+    grid-template-rows: 25% 45% 30%;
+  `}
 `;
 
 export const Empty = styled.div`
@@ -28,11 +40,11 @@ export const Empty2 = styled.div`
 `;
 
 const modifiers = {
-  hand: () => css`
+  flexRow: () => css`
     display: flex;
     flex-direction: row;
   `,
-  pile: () => css`
+  flexCenter: () => css`
     display: flex;
     justify-content: center;
     align-items: center;
@@ -59,20 +71,20 @@ export const CardsArea = styled.div`
 export const Player1 = styled.div`
   grid-area: player1;
   background-color: white;
-  ${modifiers.hand()}
+  ${modifiers.flexRow()}
 `;
 
 export const Player2 = styled.div`
   grid-area: player2;
   background-color: white;
-  ${modifiers.hand()}
+  ${modifiers.flexRow()}
 `;
 
 export const DiscardPile = styled.div`
   grid-area: discardpile;
   background-color: yellow;
   border-radius: 50%;
-  ${modifiers.pile()}
+  ${modifiers.flexCenter()}
 `;
 
 export const ColorSelector = styled.div`
@@ -113,9 +125,10 @@ export const Pile = styled.div`
   grid-area: pile;
   background-color: yellow;
   border-radius: 50%;
-  ${modifiers.pile()}
+  ${modifiers.flexCenter()}
 `;
 
 export const Uno = styled.div`
   grid-area: uno;
+  ${modifiers.flexCenter()}
 `;

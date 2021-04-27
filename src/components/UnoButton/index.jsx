@@ -2,9 +2,9 @@ import React from 'react';
 
 import * as S from './styles';
 
-const UnoButton = () => (
+const UnoButton = ({ onClick }) => (
   <S.Wrapper>
-    <h1>UnoButton</h1>
+    <S.Button onClick={onClick}>UNO!</S.Button>
   </S.Wrapper>
 );
 
