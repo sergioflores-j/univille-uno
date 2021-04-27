@@ -2,6 +2,11 @@ import { createGlobalStyle, css } from 'styled-components';
 
 const GlobalStyles = createGlobalStyle`
   ${({ theme }) => css`
+    :root {
+      --scrollbarBG: #e2e2e2;
+      --thumbBG: #828282;
+    }
+
     *,
     *::before,
     *::after {
@@ -10,6 +15,21 @@ const GlobalStyles = createGlobalStyle`
       box-sizing: border-box;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
+    }
+    * {
+      &::-webkit-scrollbar {
+        width: 11px;
+      }
+
+      &::-webkit-scrollbar-track {
+        background: var(--scrollbarBG);
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background-color: var(--thumbBG);
+        border-radius: 6px;
+        border: 3px solid var(--scrollbarBG);
+      }
     }
 
     html,
@@ -35,6 +55,8 @@ const GlobalStyles = createGlobalStyle`
 
     body {
       font-size: ${theme.font.sizes.small};
+      scrollbar-width: thin;
+      scrollbar-color: var(--thumbBG) var(--scrollbarBG);
     }
 
     @media only screen and (max-width: 480px) {
@@ -43,8 +65,6 @@ const GlobalStyles = createGlobalStyle`
       }
     }
 
-    html,
-    body,
     button {
       font-family: ${theme.font.family};
     }
