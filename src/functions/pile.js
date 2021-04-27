@@ -36,7 +36,7 @@ export const generateCardsPile = () => {
 
   const wildCardsPile = wildCards.reduce((acc, card) => {
     for (let i = 0; i < 4; ++i) {
-      acc.push({ id: uniqueId(), card, color: 'special' });
+      acc.push({ id: uniqueId(), card, color: 'special', special: true });
     }
 
     return acc;
@@ -44,3 +44,10 @@ export const generateCardsPile = () => {
 
   return shufflePile([...coloredCardsPile, ...wildCardsPile]);
 };
+
+export const resetWildCardsColor = pile =>
+  pile.map(card => {
+    if (card.special) return { ...card, color: 'special' };
+
+    return card;
+  });

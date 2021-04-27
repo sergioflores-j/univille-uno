@@ -10,6 +10,7 @@ import Board from 'components/Board';
 import { usePlayer } from 'context/player';
 import { shuffle } from 'utils/array';
 import { useGame } from 'context/game';
+import { resetWildCardsColor } from 'functions/pile';
 
 const Game = () => {
   const player = usePlayer();
@@ -45,7 +46,9 @@ const Game = () => {
   const pileSelfHeal = useCallback(() => {
     setPile(old => [
       ...old,
-      ...shuffle(discardedPile.slice(0, discardedPile.length - 1)),
+      ...resetWildCardsColor(
+        shuffle(discardedPile.slice(0, discardedPile.length - 1))
+      ),
     ]);
     setDiscardedPile([discardedPile[discardedPile.length - 1]]);
   }, [discardedPile]);
@@ -145,6 +148,15 @@ const Game = () => {
     [unoedPlayers, drawCards, players]
   );
 
+  const onSetCardColor = useCallback(color => {
+    setDiscardedPile(p => {
+      const copy = [...p];
+      copy[copy.length - 1].color = color;
+
+      return copy;
+    });
+  }, []);
+
   useEffect(() => {
     if (!mounted.current) return;
 
@@ -183,6 +195,7 @@ const Game = () => {
         unoedPlayers={unoedPlayers}
         onDrawCards={() => drawCards(1, 1)}
         onCallUno={() => callUno(2)}
+        onSetCardColor={onSetCardColor}
       />
     </>
   );
