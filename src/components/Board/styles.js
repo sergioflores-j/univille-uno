@@ -77,6 +77,10 @@ export const CardsArea = styled.div`
   max-width: 100%;
   overflow: auto;
   padding: 0 10px;
+
+  &::-webkit-scrollbar {
+    width: 18px;
+  }
 `;
 
 export const Player1 = styled.div`
