@@ -9,7 +9,7 @@ export const Wrapper = styled.div`
 `;
 
 export const Content = styled.div`
-  ${({ color, loading }) => css`
+  ${({ color, $loading }) => css`
     width: 100px;
     height: 150px;
 
@@ -19,7 +19,7 @@ export const Content = styled.div`
       cursor: pointer;
     }
 
-    ${loading &&
+    ${$loading &&
     css`
       background-size: 100px 100px;
       background-image: linear-gradient(

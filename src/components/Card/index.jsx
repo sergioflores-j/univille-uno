@@ -12,7 +12,7 @@ function useDynamicSVGImport(card) {
 
       // ? svg inline loading - CRA BUG: https://github.com/facebook/create-react-app/issues/5276#issuecomment-665628393
       const cardContent = await import(
-        `!!@svgr/webpack?-svgo,+titleProp,+ref!assets/cards${card}.svg`
+        `!!@svgr/webpack?-svgo,+titleProp,+ref!assets/cards/${card}.svg`
       )
         .catch(() =>
           import('!!@svgr/webpack?-svgo,+titleProp,+ref!assets/cards/back.svg')
@@ -34,7 +34,7 @@ const Card = ({ card, color = 'default', onClick }) => {
 
   return (
     <S.Wrapper>
-      <S.Content color={color} loading={loading}>
+      <S.Content color={color} $loading={loading}>
         {!loading && !!SvgIcon && <SvgIcon onClick={onClick} />}
       </S.Content>
     </S.Wrapper>
