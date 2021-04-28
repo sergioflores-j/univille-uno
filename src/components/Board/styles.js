@@ -111,8 +111,8 @@ export const Player2 = styled.div`
 export const DiscardPile = styled.div`
   ${({ theme }) => css`
     grid-area: discardpile;
-    background-color: ${theme.colors.secondary};
-    border-radius: 50%;
+    background-color: ${theme.colors.alternative};
+    border-radius: 10px;
     ${modifiers.flexCenter()}
   `}
 `;
@@ -121,7 +121,7 @@ export const Pile = styled.div`
   ${({ theme, isActive }) => css`
     grid-area: pile;
     background-color: ${theme.colors.secondary};
-    border-radius: 50%;
+    border-radius: 10px;
     ${modifiers.flexCenter()}
     ${isActive && modifiers.activeArea()}
   `}

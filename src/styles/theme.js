@@ -17,6 +17,8 @@ export default {
   colors: {
     primary: '#3e4760',
     secondary: '#7ea9b0',
+    // alternative: '#02353e',
+    alternative: '#001f25',
 
     border: '#C4CDD5',
     background: '#FFFFFF',
