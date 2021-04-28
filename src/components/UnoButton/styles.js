@@ -21,5 +21,9 @@ export const Button = styled.button`
     font-size: 28px;
     color: red;
     background-color: #eeeeee;
+    &:hover {
+      box-shadow: 8px 5px 20px 0px black;
+      cursor: pointer;
+    }
   `}
 `;
