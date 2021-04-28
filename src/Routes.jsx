@@ -1,7 +1,13 @@
 import React, { useEffect } from 'react';
 import { GameProvider } from 'context/game';
 import { usePlayer } from 'context/player';
-import { Redirect, Switch, Route, useHistory } from 'react-router-dom';
+import {
+  Redirect,
+  Switch,
+  Route,
+  useHistory,
+  useLocation,
+} from 'react-router-dom';
 
 import Frame from './components/Frame';
 import PageBase from './components/PageBase';
@@ -11,6 +17,7 @@ import Start from './views/Start';
 function Routes() {
   const player = usePlayer();
   const history = useHistory();
+  const location = useLocation();
 
   useEffect(() => {
     if (!player.name) {
@@ -19,7 +26,7 @@ function Routes() {
   }, [history, player.name]);
 
   return (
-    <Frame>
+    <Frame isDark={location.pathname === '/game'}>
       <Switch>
         <Redirect exact path="/" to="/start" />
         <Route path="/start">

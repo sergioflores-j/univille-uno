@@ -9,6 +9,8 @@ export const Wrapper = styled.div`
     padding: 0 ${theme.spacings.xxsmall};
     border: 1px solid black;
     align-items: center;
+    background-color: #f7f7f7;
+    box-shadow: 6px 4px 24px 0px #000000;
   `}
 `;
 

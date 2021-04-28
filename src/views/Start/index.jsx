@@ -46,9 +46,7 @@ const Start = () => {
             onChange={e => changePlayer(p => ({ ...p, name: e.target.value }))}
           />
         </S.Input>
-        <button type="button" onClick={handleStart} disabled={!player.name}>
-          Start
-        </button>
+        <button type="button" onClick={handleStart} disabled={!player.name} />
       </S.Content>
     </S.Wrapper>
   );

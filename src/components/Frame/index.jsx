@@ -4,8 +4,8 @@ import Header from '../Header';
 
 import * as S from './styles';
 
-const Frame = ({ children }) => (
-  <S.Wrapper>
+const Frame = ({ isDark = false, children }) => (
+  <S.Wrapper isDark={isDark}>
     <Header />
     {children}
   </S.Wrapper>
