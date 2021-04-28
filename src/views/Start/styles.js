@@ -56,5 +56,6 @@ export const Input = styled.div`
     font-size: 20px;
     line-height: 1.5;
     width: 100%;
+    border-radius: 5px;
   }
 `;

@@ -11,6 +11,7 @@ export const Wrapper = styled.div`
     align-items: center;
     background-color: #f7f7f7;
     box-shadow: 6px 4px 24px 0px #000000;
+    border-radius: 8px;
   `}
 `;
 

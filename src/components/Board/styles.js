@@ -50,6 +50,7 @@ const modifiers = {
     display: flex;
     flex-direction: column;
     padding: 5px;
+    border-radius: 8px;
   `,
   activeArea: () => css`
     box-shadow: 2px 0px 20px 9px white;
