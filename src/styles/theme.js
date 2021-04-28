@@ -15,8 +15,9 @@ export default {
     },
   },
   colors: {
-    primary: '#212B36',
-    secondary: '#C4CDD5',
+    primary: '#3e4760',
+    secondary: '#7ea9b0',
+
     border: '#C4CDD5',
     background: '#FFFFFF',
     backgroundLighter: '#F4F6F8',

@@ -2,8 +2,8 @@ import styled, { css } from 'styled-components';
 import media from 'styled-media-query';
 
 export const Wrapper = styled.div`
-  ${() => css`
-    background-color: green;
+  ${({ theme }) => css`
+    background-color: ${theme.colors.primary};
   `}
 `;
 
@@ -51,6 +51,9 @@ const modifiers = {
     flex-direction: column;
     padding: 5px;
   `,
+  activeArea: () => css`
+    box-shadow: 2px 0px 20px 9px white;
+  `,
 };
 
 export const PlayerHud = styled.div`
@@ -84,30 +87,43 @@ export const CardsArea = styled.div`
 `;
 
 export const Player1 = styled.div`
-  grid-area: player1;
-  background-color: white;
-  ${modifiers.playerArea()}
-  flex-direction: column-reverse;
+  ${({ theme, isActive }) => css`
+    grid-area: player1;
+    background-color: ${theme.colors.secondary};
+    ${modifiers.playerArea()}
+    flex-direction: column-reverse;
+
+    ${isActive && modifiers.activeArea()}
+  `}
 `;
 
 export const Player2 = styled.div`
-  grid-area: player2;
-  background-color: white;
-  ${modifiers.playerArea()}
+  ${({ theme, isActive }) => css`
+    grid-area: player2;
+    background-color: ${theme.colors.secondary};
+    ${modifiers.playerArea()}
+
+    ${isActive && modifiers.activeArea()}
+  `}
 `;
 
 export const DiscardPile = styled.div`
-  grid-area: discardpile;
-  background-color: yellow;
-  border-radius: 50%;
-  ${modifiers.flexCenter()}
+  ${({ theme }) => css`
+    grid-area: discardpile;
+    background-color: ${theme.colors.secondary};
+    border-radius: 50%;
+    ${modifiers.flexCenter()}
+  `}
 `;
 
 export const Pile = styled.div`
-  grid-area: pile;
-  background-color: yellow;
-  border-radius: 50%;
-  ${modifiers.flexCenter()}
+  ${({ theme, isActive }) => css`
+    grid-area: pile;
+    background-color: ${theme.colors.secondary};
+    border-radius: 50%;
+    ${modifiers.flexCenter()}
+    ${isActive && modifiers.activeArea()}
+  `}
 `;
 
 export const Uno = styled.div`

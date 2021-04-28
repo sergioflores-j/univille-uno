@@ -7,6 +7,7 @@ import ColorSelector from 'components/ColorSelector';
 import * as S from './styles';
 
 const Board = ({
+  currentPlayer,
   discardedPile,
   players,
   unoedPlayers,
@@ -23,7 +24,7 @@ const Board = ({
       <S.Content>
         <S.Empty />
 
-        <S.Player1>
+        <S.Player1 isActive={currentPlayer === 0}>
           <S.PlayerHud>
             <S.QuantityIndicator>{bot?.cards.length}</S.QuantityIndicator>
             <S.PlayerName>{bot?.name}</S.PlayerName>
@@ -45,15 +46,19 @@ const Board = ({
           )}
         </S.DiscardPile>
 
-        <S.Pile>
-          <Card card="back" onClick={onDrawCards} clickable />
+        <S.Pile isActive={currentPlayer === 1}>
+          <Card
+            card="back"
+            onClick={onDrawCards}
+            clickable={currentPlayer === 1}
+          />
         </S.Pile>
 
         <S.Uno>
           {!!unoedPlayers.length && <UnoButton onClick={onCallUno} />}
         </S.Uno>
 
-        <S.Player2>
+        <S.Player2 isActive={currentPlayer === 1}>
           <S.PlayerHud>
             <S.QuantityIndicator>{player?.cards.length}</S.QuantityIndicator>
             <S.PlayerName>{player?.name}</S.PlayerName>
@@ -62,7 +67,7 @@ const Board = ({
             {player?.cards.map(({ id, ...card }) => (
               <Card
                 {...card}
-                clickable
+                clickable={currentPlayer === 1}
                 onClick={() => onCardClick({ id, ...card })}
                 key={`playercard-${id}`}
               />

@@ -17,6 +17,7 @@ const Game = () => {
   const game = useGame();
   const mounted = useRef(false);
   const gameStarted = useRef(false);
+
   const [pile, setPile] = useState([]);
   const [discardedPile, setDiscardedPile] = useState([]);
   const [players, setPlayers] = useState([
@@ -35,6 +36,8 @@ const Game = () => {
       cards: [],
     },
   ]);
+  const [currentPlayer, setCurrentPlayer] = useState(-1);
+
   const unoedPlayers = useMemo(
     () => players.filter(p => p.cards.length === 1 && !p.calledUno),
     [players]
@@ -123,6 +126,8 @@ const Game = () => {
     setPlayerCards(0, game.initialBotCards);
     setPlayerCards(1, game.initialPlayerCards);
     setPile(game.remainingCards);
+    // ? Randomically chooses who starts playing
+    setCurrentPlayer(Math.floor(Math.random() * 2));
 
     gameStarted.current = true;
   }, [game]);
@@ -156,6 +161,29 @@ const Game = () => {
       return copy;
     });
   }, []);
+
+  const passRound = useCallback(() => {
+    setCurrentPlayer(c => {
+      if (players[c + 1]) return c + 1;
+
+      return 0;
+    });
+  }, [players]);
+
+  const handleSelectCard = useCallback(
+    card => {
+      console.log('card clicked', card);
+      // TODO: select card constraints
+      passRound();
+    },
+    [passRound]
+  );
+
+  const handleDrawCards = useCallback(() => {
+    console.log('draw cards');
+    drawCards(1, 1);
+    passRound();
+  }, [drawCards, passRound]);
 
   // ? Pile selfheal (when going less than 5 remaining cards, reshuffle the discarded pile into it)
   useEffect(() => {
@@ -192,13 +220,15 @@ const Game = () => {
   return (
     <>
       <Board
+        currentPlayer={currentPlayer}
         pile={pile}
         discardedPile={discardedPile}
         players={players}
         unoedPlayers={unoedPlayers}
-        onDrawCards={() => drawCards(1, 1)}
+        onDrawCards={handleDrawCards}
         onCallUno={() => callUno(2)}
         onSetCardColor={onSetCardColor}
+        onCardClick={handleSelectCard}
       />
     </>
   );

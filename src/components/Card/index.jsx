@@ -35,7 +35,9 @@ const Card = ({ card, color = 'default', clickable = false, onClick }) => {
   return (
     <S.Wrapper>
       <S.Content color={color} $loading={loading} $clickable={clickable}>
-        {!loading && !!SvgIcon && <SvgIcon onClick={onClick} />}
+        {!loading && !!SvgIcon && (
+          <SvgIcon onClick={clickable ? onClick : () => {}} />
+        )}
       </S.Content>
     </S.Wrapper>
   );

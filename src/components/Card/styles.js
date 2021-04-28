@@ -17,8 +17,17 @@ export const Content = styled.div`
     svg {
       width: 100%;
       height: 100%;
-      cursor: ${$clickable ? 'pointer' : 'normal'};
     }
+
+    ${$clickable &&
+    css`
+      svg {
+        cursor: pointer;
+      }
+      &:hover {
+        border: 2px solid transparent;
+      }
+    `}
 
     ${$loading &&
     css`
