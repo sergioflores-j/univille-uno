@@ -14,7 +14,11 @@ export const cards = [
 ];
 export const colors = ['blue', 'green', 'red', 'yellow'];
 export const wildCards = ['draw4', 'change_color'];
+
+// ? Special lists
 export const forbiddenStartCards = [...wildCards, ...specialCards];
+export const shouldSkipRoundPass = [...specialCards, 'draw4'];
+export const drawableCards = ['draw2', 'draw4'];
 
 export const cardColorMap = {
   blue: '#132779',

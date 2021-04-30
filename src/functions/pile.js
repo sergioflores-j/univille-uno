@@ -45,9 +45,10 @@ export const generateCardsPile = () => {
   return shufflePile([...coloredCardsPile, ...wildCardsPile]);
 };
 
-export const resetWildCardsColor = pile =>
+export const resetCards = pile =>
   pile.map(card => {
-    if (card.special) return { ...card, color: 'special' };
+    const newCard = { ...card, playedBy: undefined, round: undefined };
+    if (card.special) newCard.color = 'special';
 
     return card;
   });

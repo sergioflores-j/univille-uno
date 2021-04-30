@@ -2,8 +2,8 @@ import { generateCardsPile } from 'functions/pile';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { usePlayer } from './player';
 
-const GameContext = createContext();
-const ChangeGameContext = createContext();
+export const GameContext = createContext();
+export const ChangeGameContext = createContext();
 
 export function GameProvider({ children }) {
   const player = usePlayer();
@@ -18,6 +18,8 @@ export function GameProvider({ children }) {
   useEffect(() => {
     const generatedPile = generateCardsPile();
     setState({
+      // ? Randomically chooses who starts playing
+      initialPlayer: Math.floor(Math.random() * 2),
       firstCard: generatedPile[0],
       initialBotCards: generatedPile.slice(1, 8),
       initialPlayerCards: generatedPile.slice(8, 15),
