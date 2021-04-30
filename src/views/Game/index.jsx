@@ -19,7 +19,6 @@ const Game = () => {
   const game = useGame();
   const mounted = useRef(false);
   const gameStarted = useRef(false);
-  const firstRound = useRef(true);
   const botDelayTimerId = useRef(null);
 
   const [rounds, setRounds] = useState(0);
@@ -99,16 +98,12 @@ const Game = () => {
     [calledUnoPlayers, players]
   );
 
-  const passRound = () => {
-    const lastPlayedCard = discardedPile[discardedPile.length - 1];
-
+  const passRound = lastPlayedCard => {
     console.log('passRound - lastPlayedCard', lastPlayedCard);
 
-    if (!lastPlayedCard || lastPlayedCard.color === 'special') return;
+    if (lastPlayedCard?.color === 'special') return;
 
-    const condition =
-      shouldSkipRoundPass.includes(lastPlayedCard.card) &&
-      lastPlayedCard.round === rounds;
+    const condition = shouldSkipRoundPass.includes(lastPlayedCard?.card);
 
     console.log('passRound - check', condition);
 
@@ -128,7 +123,11 @@ const Game = () => {
   const onDrawCards = useCallback(
     (playerIndex, oldCards, newCards, { shouldPassRound = true } = {}) => {
       resetUno(playerIndex, oldCards, newCards);
-      if (shouldPassRound) passRound();
+
+      if (shouldPassRound) {
+        console.log('onDrawCards - shouldPassRound');
+        passRound();
+      }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [resetUno]
@@ -201,13 +200,36 @@ const Game = () => {
   );
 
   const handleSetCardColor = useCallback(color => {
+    console.log('handleSetCardColor - start');
     setDiscardedPile(p => {
       const copy = [...p];
       copy[copy.length - 1].color = color;
 
+      passRound(copy[copy.length - 1]);
+
       return copy;
     });
   }, []);
+
+  const onSelectCard = (playerIndex, card) => {
+    if (drawableCards.includes(card.card)) {
+      console.log(
+        'onSelectCard - draw quantity',
+        card.card.replace('draw', '')
+      );
+
+      drawCards(
+        // ? Sets the other player to draw cards (change this when multiple players!!)
+        playerIndex === 0 ? 1 : 0,
+        Number(card.card.replace('draw', '')),
+        {
+          shouldPassRound: false,
+        }
+      );
+    }
+
+    passRound(card);
+  };
 
   const handleSelectCard = useCallback(
     (playerIndex, card) => {
@@ -216,18 +238,11 @@ const Game = () => {
 
       if (!isPlayableCard(lastPlayedCard, card)) return;
 
-      if (drawableCards.includes(card.card))
-        drawCards(
-          // ? Sets the other player to draw cards (change this when multiple players!!)
-          playerIndex === 0 ? 1 : 0,
-          Number(card.card.replace('draw'), { shouldPassRound: false })
-        );
+      const playedCard = { ...card, playedBy: playerIndex, round: rounds };
 
-      setDiscardedPile(old => [
-        ...old,
-        { ...card, playedBy: playerIndex, round: rounds },
-      ]);
+      setDiscardedPile(old => [...old, playedCard]);
       removePlayerCard(playerIndex, card);
+      onSelectCard(playerIndex, playedCard);
     },
     [discardedPile, drawCards, rounds]
   );
@@ -285,18 +300,6 @@ const Game = () => {
       return [...copy];
     });
   }, [player]);
-
-  useEffect(() => {
-    if (!gameStarted.current) return;
-
-    if (firstRound.current) {
-      firstRound.current = false;
-      return;
-    }
-
-    passRound();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [discardedPile]);
 
   useEffect(() => {
     if (!gameStarted.current) return;
