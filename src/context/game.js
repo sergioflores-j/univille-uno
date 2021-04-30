@@ -9,6 +9,7 @@ export function GameProvider({ children }) {
   const player = usePlayer();
 
   const [state, setState] = useState({
+    winner: null,
     firstCard: {},
     initialBotCards: [],
     initialPlayerCards: [],
@@ -17,17 +18,24 @@ export function GameProvider({ children }) {
 
   useEffect(() => {
     const generatedPile = generateCardsPile();
-    setState({
+    setState(oldState => ({
+      ...oldState,
       // ? Randomically chooses who starts playing
       initialPlayer: Math.floor(Math.random() * 2),
       firstCard: generatedPile[0],
       initialBotCards: generatedPile.slice(1, 8),
       initialPlayerCards: generatedPile.slice(8, 15),
       remainingCards: generatedPile.slice(15),
-    });
+    }));
   }, [player]);
 
-  return <GameContext.Provider value={state}>{children}</GameContext.Provider>;
+  return (
+    <GameContext.Provider value={state}>
+      <ChangeGameContext.Provider value={setState}>
+        {children}
+      </ChangeGameContext.Provider>
+    </GameContext.Provider>
+  );
 }
 
 export function useGame() {

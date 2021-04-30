@@ -12,6 +12,7 @@ import {
 import Frame from './components/Frame';
 import PageBase from './components/PageBase';
 import Game from './views/Game';
+import PostGame from './views/PostGame';
 import Start from './views/Start';
 
 function Routes() {
@@ -38,6 +39,13 @@ function Routes() {
           <PageBase>
             <GameProvider>
               <Game />
+            </GameProvider>
+          </PageBase>
+        </Route>
+        <Route path="/postgame">
+          <PageBase>
+            <GameProvider>
+              <PostGame />
             </GameProvider>
           </PageBase>
         </Route>

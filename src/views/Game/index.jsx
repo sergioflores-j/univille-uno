@@ -9,14 +9,18 @@ import React, {
 import Board from 'components/Board';
 import { usePlayer } from 'context/player';
 import { shuffle } from 'utils/array';
-import { useGame } from 'context/game';
+import { useChangeGame, useGame } from 'context/game';
 import { resetCards } from 'functions/pile';
 import { colors, drawableCards, shouldSkipRoundPass } from 'constants/index';
 import { delay, findPlayableCard, isPlayableCard } from 'utils/game';
+import { useHistory } from 'react-router-dom';
 
 const Game = () => {
   const player = usePlayer();
   const game = useGame();
+  const changeGame = useChangeGame();
+  const history = useHistory();
+
   const mounted = useRef(false);
   const gameStarted = useRef(false);
   const botDelayTimerId = useRef(null);
@@ -46,6 +50,9 @@ const Game = () => {
     () => players.filter(p => p.cards.length === 1 && !p.calledUno),
     [players]
   );
+  const winner = useMemo(() => players.find(p => p.cards.length === 0), [
+    players,
+  ]);
   const calledUnoPlayers = useMemo(() => players.filter(p => p.calledUno), [
     players,
   ]);
@@ -324,6 +331,16 @@ const Game = () => {
 
     start();
   }, [start]);
+
+  useEffect(() => {
+    if (!mounted.current) return;
+
+    if (winner) {
+      changeGame(old => ({ ...old, winner }));
+      history.push('postgame');
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [winner]);
 
   useEffect(() => {
     if (mounted.current) return;
