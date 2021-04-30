@@ -85,14 +85,12 @@ const Game = () => {
     });
 
   const resetUno = useCallback(
-    (playerIndex, oldCards, newCards) => {
+    playerIndex => {
       if (!calledUnoPlayers.length) return;
 
-      if (
-        calledUnoPlayers.some(p => p.id === players[playerIndex].id) &&
-        newCards.length > 1 &&
-        oldCards.length === 1
-      ) {
+      console.log('resetUno - calledUnoPlayers', calledUnoPlayers);
+
+      if (calledUnoPlayers.some(p => p.id === players[playerIndex].id)) {
         setPlayers(old => {
           const newP = [...old];
 
@@ -234,6 +232,8 @@ const Game = () => {
         }
       );
     }
+
+    resetUno(playerIndex);
 
     passRound(card);
   };
