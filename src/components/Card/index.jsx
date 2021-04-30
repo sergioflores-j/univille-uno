@@ -29,12 +29,23 @@ function useDynamicSVGImport(card) {
   return { loading, SvgIcon: ImportedIconRef.current };
 }
 
-const Card = ({ card, color = 'default', clickable = false, onClick }) => {
+const Card = ({
+  card,
+  color = 'default',
+  clickable = false,
+  playable = true,
+  onClick,
+}) => {
   const { SvgIcon, loading } = useDynamicSVGImport(card);
 
   return (
     <S.Wrapper>
-      <S.Content color={color} $loading={loading} $clickable={clickable}>
+      <S.Content
+        color={color}
+        $loading={loading}
+        $clickable={clickable}
+        $playable={playable}
+      >
         {!loading && !!SvgIcon && (
           <SvgIcon onClick={clickable ? onClick : () => {}} />
         )}

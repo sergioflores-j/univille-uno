@@ -10,13 +10,14 @@ export const Wrapper = styled.div`
 `;
 
 export const Content = styled.div`
-  ${({ color, $loading, $clickable }) => css`
+  ${({ color, $loading, $clickable, $playable }) => css`
     width: 100px;
     height: 150px;
 
     svg {
       width: 100%;
       height: 100%;
+      opacity: ${$playable ? 1 : 0.5};
     }
 
     ${$clickable &&

@@ -3,6 +3,7 @@ import React from 'react';
 import UnoButton from 'components/UnoButton';
 import Card from 'components/Card';
 import ColorSelector from 'components/ColorSelector';
+import { isPlayableCard } from 'utils/game';
 
 import * as S from './styles';
 
@@ -67,6 +68,7 @@ const Board = ({
             {player?.cards.map(({ id, ...card }) => (
               <Card
                 {...card}
+                playable={isPlayableCard(lastPlayedCard, card)}
                 clickable={currentPlayer === 1}
                 onClick={() => onCardClick({ id, ...card })}
                 key={`playercard-${id}`}
