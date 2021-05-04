@@ -15,6 +15,8 @@ import Game from './views/Game';
 import PostGame from './views/PostGame';
 import Start from './views/Start';
 
+const darkPages = ['/game', '/postgame'];
+
 function Routes() {
   const player = usePlayer();
   const history = useHistory();
@@ -27,7 +29,7 @@ function Routes() {
   }, [history, player.name]);
 
   return (
-    <Frame isDark={location.pathname === '/game'}>
+    <Frame isDark={darkPages.includes(location.pathname)}>
       <Switch>
         <Redirect exact path="/" to="/start" />
         <Route path="/start">

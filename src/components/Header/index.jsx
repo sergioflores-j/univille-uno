@@ -1,20 +1,38 @@
-import React from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useHistory, useLocation } from 'react-router-dom';
 
 import logo from 'assets/logo.svg';
-import { usePlayer } from 'context/player';
 import * as S from './styles';
 
 const Header = () => {
   const history = useHistory();
-  const player = usePlayer();
+  const location = useLocation();
+  const [isCollapsed, setIsCollapsed] = useState(false);
+
+  useEffect(() => {
+    if (location.pathname === '/game') {
+      setIsCollapsed(true);
+    }
+    if (location.pathname === '/postgame') {
+      setIsCollapsed(false);
+    }
+  }, [location]);
 
   return (
-    <S.Wrapper>
-      <S.Logo src={logo} onClick={() => history?.push('/')} />
-      <S.Heading>Univille Uno</S.Heading>
-      <S.Content>{player?.name && <>Hello {player.name}</>}</S.Content>
-    </S.Wrapper>
+    <>
+      <S.Wrapper>
+        <S.Content isCollapsed={isCollapsed}>
+          {!isCollapsed && (
+            <S.Logo src={logo} onClick={() => history?.push('/')} />
+          )}
+          <S.Heading>Univille Uno</S.Heading>
+        </S.Content>
+        <S.HideToggle
+          isCollapsed={isCollapsed}
+          onClick={() => setIsCollapsed(old => !old)}
+        />
+      </S.Wrapper>
+    </>
   );
 };
 

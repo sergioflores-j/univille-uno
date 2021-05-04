@@ -2,13 +2,11 @@ import styled, { css } from 'styled-components';
 
 export const Wrapper = styled.div`
   ${({ theme }) => css`
-    display: flex;
     width: 100%;
     position: sticky;
     top: 0;
     padding: 0 ${theme.spacings.xxsmall};
     border: 1px solid black;
-    align-items: center;
     background-color: #f7f7f7;
     box-shadow: 6px 4px 24px 0px #000000;
     border-radius: 8px;
@@ -29,7 +27,23 @@ export const Heading = styled.h1`
 `;
 
 export const Content = styled.div`
-  ${() => css`
-    margin: 15px;
+  ${({ theme, isCollapsed }) => css`
+    display: flex;
+    align-items: center;
+    padding: ${!!isCollapsed && theme.spacings.xxsmall};
+  `}
+`;
+
+export const HideToggle = styled.div`
+  ${({ isCollapsed }) => css`
+    font-size: 20px;
+    position: absolute;
+    margin-top: -20px;
+    right: 50%;
+
+    &::after {
+      content: ${isCollapsed ? "'∨'" : "'∧'"};
+      cursor: pointer;
+    }
   `}
 `;

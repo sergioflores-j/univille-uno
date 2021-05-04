@@ -17,7 +17,7 @@ export const Content = styled.div`
   grid-template-rows: 27% 43% 30%;
   gap: 10px;
   padding: 20px;
-  height: calc(100vh - 215px);
+  max-height: 90vh;
 
   ${media.lessThan('large')`
     grid-template-areas:
