@@ -8,6 +8,7 @@ export const Wrapper = styled.div`
     align-items: center;
     min-height: 50vh;
     font-size: 28px;
+    color: white;
   `}
 `;
 
