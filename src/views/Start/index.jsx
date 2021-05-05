@@ -3,6 +3,7 @@ import React, { useCallback, useEffect, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { useChangePlayer, usePlayer } from 'context/player';
+import log from 'utils/log';
 
 import * as S from './styles';
 
@@ -21,7 +22,7 @@ const Start = () => {
   }, []);
 
   const handleStart = useCallback(() => {
-    console.log('starting...', player);
+    log('starting...', player);
 
     if (!player.name) return;
 

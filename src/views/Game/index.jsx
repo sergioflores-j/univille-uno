@@ -5,15 +5,16 @@ import React, {
   useRef,
   useState,
 } from 'react';
+import { useHistory } from 'react-router-dom';
 
 import Board from 'components/Board';
+import { colors, drawableCards, shouldSkipRoundPass } from 'constants/index';
 import { usePlayer } from 'context/player';
-import { shuffle } from 'utils/array';
 import { useChangeGame, useGame } from 'context/game';
 import { resetCards } from 'functions/pile';
-import { colors, drawableCards, shouldSkipRoundPass } from 'constants/index';
 import { delay, findPlayableCard, isPlayableCard } from 'utils/game';
-import { useHistory } from 'react-router-dom';
+import { shuffle } from 'utils/array';
+import log from 'utils/log';
 
 const Game = () => {
   const player = usePlayer();
@@ -60,7 +61,7 @@ const Game = () => {
   const pileSelfHeal = useCallback(() => {
     if (pile.length > 5) return;
 
-    console.log('pileSelfHeal - start', pile.length, discardedPile.length);
+    log('pileSelfHeal - start', pile.length, discardedPile.length);
 
     setPile(old => [
       ...old,
@@ -92,7 +93,7 @@ const Game = () => {
     playerIndex => {
       if (!calledUnoPlayers.length) return;
 
-      console.log('resetUno - calledUnoPlayers', calledUnoPlayers);
+      log('resetUno - calledUnoPlayers', calledUnoPlayers);
 
       if (calledUnoPlayers.some(p => p.id === players[playerIndex].id)) {
         setPlayers(old => {
@@ -108,17 +109,17 @@ const Game = () => {
   );
 
   const passRound = lastPlayedCard => {
-    console.log('passRound - lastPlayedCard', lastPlayedCard);
+    log('passRound - lastPlayedCard', lastPlayedCard);
 
     if (lastPlayedCard?.color === 'special') return;
 
     const condition = shouldSkipRoundPass.includes(lastPlayedCard?.card);
 
-    console.log('passRound - check', condition);
+    log('passRound - check', condition);
 
     if (!condition) {
       setCurrentPlayer(c => {
-        console.log('passRound - will pass round');
+        log('passRound - will pass round');
 
         if (players[c + 1]) return c + 1;
 
@@ -134,7 +135,7 @@ const Game = () => {
       resetUno(playerIndex, oldCards, newCards);
 
       if (shouldPassRound) {
-        console.log('onDrawCards - shouldPassRound');
+        log('onDrawCards - shouldPassRound');
         passRound();
       }
     },
@@ -191,7 +192,7 @@ const Game = () => {
     callerIndex => {
       if (!unoedPlayers.length) return;
 
-      console.log('callUno - start');
+      log('callUno - start');
 
       // Only one player can be at "uno" state at a time
       const [unoedPlayer] = unoedPlayers;
@@ -209,7 +210,7 @@ const Game = () => {
   );
 
   const handleSetCardColor = useCallback(color => {
-    console.log('handleSetCardColor - start');
+    log('handleSetCardColor - start');
     setDiscardedPile(p => {
       const copy = [...p];
       copy[copy.length - 1].color = color;
@@ -218,14 +219,12 @@ const Game = () => {
 
       return copy;
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const onSelectCard = (playerIndex, card) => {
     if (drawableCards.includes(card.card)) {
-      console.log(
-        'onSelectCard - draw quantity',
-        card.card.replace('draw', '')
-      );
+      log('onSelectCard - draw quantity', card.card.replace('draw', ''));
 
       drawCards(
         // ? Sets the other player to draw cards (change this when multiple players!!)
@@ -244,7 +243,7 @@ const Game = () => {
 
   const handleSelectCard = useCallback(
     (playerIndex, card) => {
-      console.log('handleSelectCard - card clicked', card);
+      log('handleSelectCard - card clicked', card);
       const lastPlayedCard = discardedPile[discardedPile.length - 1];
 
       if (!isPlayableCard(lastPlayedCard, card)) return;
@@ -255,28 +254,29 @@ const Game = () => {
       removePlayerCard(playerIndex, card);
       onSelectCard(playerIndex, playedCard);
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [discardedPile, drawCards, rounds]
   );
 
   const handleDrawCards = useCallback(
     playerIndex => {
-      console.log('handleDrawCards - draw cards');
+      log('handleDrawCards - draw cards');
       drawCards(playerIndex, 1);
     },
     [drawCards]
   );
 
   const performBotAction = async () => {
-    console.log('performBotAction - start');
+    log('performBotAction - start');
 
     const lastPlayedCard = discardedPile[discardedPile.length - 1];
-    console.log('performBotAction - lastPlayedCard', lastPlayedCard);
+    log('performBotAction - lastPlayedCard', lastPlayedCard);
 
     const playableCard = findPlayableCard(lastPlayedCard, players[0].cards);
 
     if (playableCard?.special) [playableCard.color] = shuffle(colors);
 
-    console.log('performBotAction - playableCard', playableCard);
+    log('performBotAction - playableCard', playableCard);
 
     // ? Delay bot actions so the player can see actions being taken
     await delay();
@@ -315,14 +315,14 @@ const Game = () => {
   useEffect(() => {
     if (!gameStarted.current) return;
 
-    console.log('round changed (useEff) - currentPlayer', currentPlayer);
+    log('round changed (useEff) - currentPlayer', currentPlayer);
 
     if (unoedPlayers.length) {
       handleBotCallUno(unoedPlayers);
     }
 
     if (currentPlayer === 0) {
-      console.log('bot should perform his actions :D');
+      log('bot should perform his actions :D');
       performBotAction();
     }
 
