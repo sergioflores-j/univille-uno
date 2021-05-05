@@ -58,12 +58,16 @@ const Game = () => {
   ]);
 
   const pileSelfHeal = useCallback(() => {
+    if (pile.length > 5) return;
+
+    console.log('pileSelfHeal - start', pile.length, discardedPile.length);
+
     setPile(old => [
       ...old,
-      ...resetCards(shuffle(discardedPile.slice(0, discardedPile.length - 1))),
+      ...shuffle(resetCards(discardedPile.slice(0, discardedPile.length - 1))),
     ]);
     setDiscardedPile([discardedPile[discardedPile.length - 1]]);
-  }, [discardedPile]);
+  }, [pile, discardedPile]);
 
   const setPlayerCards = (playerIndex, cards) =>
     setPlayers(old => {
@@ -291,10 +295,10 @@ const Game = () => {
 
   // ? Pile selfheal (when going less than 5 remaining cards, reshuffle the discarded pile into it)
   useEffect(() => {
-    if (!mounted.current) return;
+    if (!gameStarted.current) return;
 
-    if (pile.length <= 5) pileSelfHeal();
-  }, [pile, pileSelfHeal]);
+    pileSelfHeal();
+  }, [pileSelfHeal]);
 
   // ? Set player name if player context changes
   useEffect(() => {
