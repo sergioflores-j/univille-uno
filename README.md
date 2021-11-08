@@ -2,6 +2,8 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+Deployed version: https://d2595sps22imz5.cloudfront.net/start
+
 ## Available Scripts
 
 In the project directory, you can run:
